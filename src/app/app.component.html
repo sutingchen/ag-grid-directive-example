@@ -1,0 +1,35 @@
+<ng-template let-row="rowInfo" #authorList>
+  <ul *ngIf="row">
+    <li *ngFor="let author of row.rowData.authors" (click)="showBook(author)">
+      {{ author.name }}
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template let-row="rowInfo" #booksList>
+  <ul *ngIf="row">
+    <li *ngFor="let author of row.rowData.authors">
+      <ng-container *ngFor="let book of author.books">
+        <p
+          appBookHighlighter
+          [selectedBooks]="selectedBooks"
+          [targetBook]="book"
+        >
+          {{ book }}
+        </p>
+      </ng-container>
+    </li>
+  </ul>
+</ng-template>
+
+<ag-grid-angular
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  class="ag-theme-alpine"
+  [rowData]="rowData"
+  (gridReady)="onGridReady($event)"
+  (firstDataRendered)="dataRendered($event)"
+  style="width:100vh;height:100vw"
+>
+</ag-grid-angular>
+
